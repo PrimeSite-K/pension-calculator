@@ -66,10 +66,10 @@
 
   <view class="policy-card">
     <text class="policy-title">📋 退休年龄政策说明</text>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">男性职工：60岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性干部（管理/技术岗）：55岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性工人（操作/生产岗）：50岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">2025年起实施渐进式延迟退休政策</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">男性职工：原60岁，每4个月延迟1个月，最终63岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性干部：原55岁，每4个月延迟1个月，最终58岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性工人：原50岁，每2个月延迟1个月，最终55岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">2025年1月起实施，原退休日期在此之前不受影响</text></view>
   </view>
 
   <view class="disclaimer">
