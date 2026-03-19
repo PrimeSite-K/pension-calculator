@@ -8,7 +8,7 @@ Page({
     gender: 'male',
     birthYear: 1985,
     startYear: 2010,
-    wageMultiple: 1,
+    avgPayIndex: 1.00,
     retireAge: 60,
     monthlyBase: 0,
     payYears: 0
@@ -19,9 +19,9 @@ Page({
   },
 
   updateDerived() {
-    const { cityIndex, birthYear, startYear, retireAge, wageMultiple } = this.data
+    const { cityIndex, birthYear, startYear, retireAge } = this.data
     const city = CITIES[cityIndex]
-    const monthlyBase = Math.round(city.avgWage * wageMultiple)
+    const monthlyBase = city.avgWage // 月缴费基数默认用社平工资
     const currentYear = new Date().getFullYear()
     const payYears = Math.max(retireAge - (currentYear - birthYear) + (currentYear - startYear), 15)
     this.setData({ monthlyBase, payYears })
@@ -47,20 +47,34 @@ Page({
     this.updateDerived()
   },
 
-  setWageMultiple(e) {
-    this.setData({ wageMultiple: +e.currentTarget.dataset.val })
-    this.updateDerived()
+  onPayIndexInput(e) {
+    const val = parseFloat(e.detail.value)
+    if (!isNaN(val)) {
+      this.setData({ avgPayIndex: val })
+    }
   },
 
-  setRetireAge(e) {
-    this.setData({ retireAge: +e.currentTarget.dataset.val })
-    this.updateDerived()
+  onRetireAgeInput(e) {
+    const val = parseInt(e.detail.value)
+    if (!isNaN(val) && val >= 50 && val <= 70) {
+      this.setData({ retireAge: val })
+      this.updateDerived()
+    }
   },
 
   calculate() {
-    const { cityIndex, birthYear, startYear, retireAge, wageMultiple, monthlyBase, payYears } = this.data
+    const { cityIndex, birthYear, startYear, retireAge, avgPayIndex, monthlyBase, payYears } = this.data
     const city = CITIES[cityIndex]
-    const avgPayIndex = wageMultiple
+
+    // 输入校验
+    if (!avgPayIndex || avgPayIndex <= 0 || avgPayIndex > 3) {
+      wx.showToast({ title: '缴费指数请填写 0.6~3 之间的数值', icon: 'none' })
+      return
+    }
+    if (!retireAge || retireAge < 50 || retireAge > 70) {
+      wx.showToast({ title: '退休年龄请填写 50~70 之间', icon: 'none' })
+      return
+    }
 
     const result = calcPension({
       avgWage: city.avgWage,
@@ -70,8 +84,9 @@ Page({
       monthlyBase
     })
 
-    // 计算多退休年龄对比数据
-    const ages = [55, 60, 65]
+    // 多退休年龄对比（当前年龄±5年）
+    const baseAge = retireAge
+    const ages = [baseAge - 5, baseAge, baseAge + 5].filter(a => a >= 50 && a <= 70)
     const comparison = ages.map(age => {
       const currentYear = new Date().getFullYear()
       const py = Math.max(age - (currentYear - birthYear) + (currentYear - startYear), 15)
