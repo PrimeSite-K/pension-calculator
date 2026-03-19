@@ -49,7 +49,7 @@
   <view class="result-card" wx:if="{{result}}">
     <view class="result-row">
       <text class="result-label">法定退休年龄</text>
-      <text class="result-val">{{result.retireAge}} 岁</text>
+      <text class="result-val">{{result.retireAge}}</text>
     </view>
     <view class="result-row">
       <text class="result-label">预计退休日期</text>
