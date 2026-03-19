@@ -20,20 +20,16 @@ Page({
     this.setData({ workType: e.currentTarget.dataset.val, result: null })
   },
 
-  /**
-   * 延迟退休计算（2025年1月起实施）
-   *
-   * 以出生年月为基准：
-   * 男性：1965年1月起，每出生4个月延迟1个月，上限延迟36个月（63岁）
-   * 女干部：1970年1月起，每出生4个月延迟1个月，上限延迟36个月（58岁）
-   * 女工人：1975年1月起，每出生2个月延迟1个月，上限延迟60个月（55岁）
-   */
-  calcDelayMonths(birthYear, birthMonth, baseYear, baseMonth, delayRate, maxDelay) {
-    const birthTotal = birthYear * 12 + birthMonth
-    const baseTotal = baseYear * 12 + baseMonth
-    if (birthTotal <= baseTotal) return 0
-    const diff = birthTotal - baseTotal
-    return Math.min(Math.floor(diff / delayRate), maxDelay)
+  toMonthIndex(year, month) { return year * 12 + (month - 1) },
+  fromMonthIndex(idx) { return { year: Math.floor(idx / 12), month: idx % 12 + 1 } },
+
+  calcDelay(birthYear, birthMonth, baseAge, policyStartYear, policyStartMonth, delayRate, maxDelay) {
+    const origIdx = this.toMonthIndex(birthYear + baseAge, birthMonth)
+    const policyIdx = this.toMonthIndex(policyStartYear, policyStartMonth)
+    if (origIdx <= policyIdx) return 0
+    const monthsAfter = origIdx - policyIdx
+    const batch = Math.floor(monthsAfter / delayRate)
+    return Math.min(batch + 1, maxDelay)
   },
 
   calculate() {
@@ -42,32 +38,24 @@ Page({
     const birthYear = birth.getFullYear()
     const birthMonth = birth.getMonth() + 1
 
-    let baseAge, baseYear, baseMonth, delayRate, maxDelay
-
+    let baseAge, delayRate, maxDelay
     if (gender === 'male') {
-      baseAge = 60; baseYear = 1965; baseMonth = 1; delayRate = 4; maxDelay = 36
+      baseAge = 60; delayRate = 4; maxDelay = 36
     } else if (workType === 'cadre') {
-      baseAge = 55; baseYear = 1970; baseMonth = 1; delayRate = 4; maxDelay = 36
+      baseAge = 55; delayRate = 4; maxDelay = 36
     } else {
-      baseAge = 50; baseYear = 1975; baseMonth = 1; delayRate = 2; maxDelay = 60
+      baseAge = 50; delayRate = 2; maxDelay = 60
     }
 
-    const delayMonths = this.calcDelayMonths(birthYear, birthMonth, baseYear, baseMonth, delayRate, maxDelay)
+    const delayMonths = this.calcDelay(birthYear, birthMonth, baseAge, 2025, 1, delayRate, maxDelay)
+    const finalIdx = this.toMonthIndex(birthYear + baseAge, birthMonth) + delayMonths
+    const { year: finalYear, month: finalMonth } = this.fromMonthIndex(finalIdx)
 
-    // 实际退休年月 = 出生年月 + 原退休年龄（月数）+ 延迟月数
-    const totalMonths = birthYear * 12 + birthMonth + baseAge * 12 + delayMonths
-    const finalYear = Math.floor(totalMonths / 12)
-    const finalMonth = totalMonths % 12 || 12
-
-    // 实际退休年龄（岁+月）
-    const totalDelayAge = baseAge * 12 + delayMonths
-    const retireAgeYear = Math.floor(totalDelayAge / 12)
-    const retireAgeMonth = totalDelayAge % 12
-    const retireAgeStr = retireAgeMonth > 0 ? `${retireAgeYear}岁${retireAgeMonth}个月` : `${retireAgeYear}岁`
-
+    const ageY = baseAge + Math.floor(delayMonths / 12)
+    const ageM = delayMonths % 12
+    const retireAgeStr = ageM > 0 ? `${ageY}岁${ageM}个月` : `${ageY}岁`
     const retireDate = `${finalYear}年${finalMonth}月`
 
-    // 距退休时间
     const now = new Date()
     const retireDateObj = new Date(finalYear, finalMonth - 1, 1)
     const diffMs = retireDateObj - now
@@ -87,8 +75,6 @@ Page({
         : `出生较早，不受延迟退休政策影响，退休年龄${baseAge}岁`
     }
 
-    this.setData({
-      result: { retireAge: retireAgeStr, retireDate, remaining, note }
-    })
+    this.setData({ result: { retireAge: retireAgeStr, retireDate, remaining, note } })
   }
 })
