@@ -1,0 +1,70 @@
+<view class="container">
+  <!-- 主结果卡片 -->
+  <view class="result-card">
+    <text class="result-label">预计每月养老金</text>
+    <text class="result-amount">¥{{result.totalMonthly}}</text>
+    <text class="result-sub">每年约 ¥{{result.totalAnnual}} · 替代率 {{result.replaceRate}}%</text>
+    <view class="result-meta">
+      <text>{{cityName}} · {{retireAge}}岁退休 · 缴费{{payYears}}年</text>
+    </view>
+  </view>
+
+  <!-- 构成拆分 -->
+  <view class="section-card">
+    <text class="section-title">养老金构成</text>
+    <view class="breakdown-row">
+      <view class="breakdown-item">
+        <text class="breakdown-val">¥{{result.basicPension}}</text>
+        <text class="breakdown-label">基础养老金</text>
+      </view>
+      <text class="breakdown-plus">+</text>
+      <view class="breakdown-item">
+        <text class="breakdown-val">¥{{result.personalPension}}</text>
+        <text class="breakdown-label">个人账户养老金</text>
+      </view>
+      <text class="breakdown-plus">=</text>
+      <view class="breakdown-item highlight">
+        <text class="breakdown-val">¥{{result.totalMonthly}}</text>
+        <text class="breakdown-label">月养老金</text>
+      </view>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-basic" style="width:{{basicRatio}}%"></view>
+      <view class="progress-personal" style="width:{{personalRatio}}%"></view>
+    </view>
+    <view class="progress-legend">
+      <view class="legend-item"><view class="dot blue"></view><text>基础养老金</text></view>
+      <view class="legend-item"><view class="dot green"></view><text>个人账户</text></view>
+    </view>
+  </view>
+
+  <!-- 退休年龄对比 -->
+  <view class="section-card">
+    <text class="section-title">不同退休年龄对比</text>
+    <view class="compare-list">
+      <view class="compare-item {{item.age === retireAge ? 'active' : ''}}" wx:for="{{comparison}}" wx:key="age">
+        <text class="compare-age">{{item.age}}岁退休</text>
+        <view class="compare-bar-wrap">
+          <view class="compare-bar" style="width:{{item.barWidth}}%"></view>
+        </view>
+        <text class="compare-amount">¥{{item.totalMonthly}}/月</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 解锁详情按钮 -->
+  <view class="unlock-card" bindtap="watchAd">
+    <view class="unlock-left">
+      <text class="unlock-title">🎯 查看详细分析报告</text>
+      <text class="unlock-desc">多缴一年多多少？断缴影响测算</text>
+    </view>
+    <view class="unlock-btn">看广告解锁</view>
+  </view>
+
+  <!-- 重新测算 -->
+  <button class="recalc-btn" bindtap="recalc">重新测算</button>
+
+  <view class="disclaimer">
+    <text>本测算结果仅供参考，实际养老金以社保局核定为准</text>
+  </view>
+</view>

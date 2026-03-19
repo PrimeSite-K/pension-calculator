@@ -1,0 +1,81 @@
+<view class="container">
+  <view class="header">
+    <text class="title">退休金测算</text>
+    <text class="subtitle">预估您退休后每月可领取的养老金</text>
+  </view>
+
+  <view class="form-card">
+    <!-- 城市选择 -->
+    <view class="form-item">
+      <text class="label">参保城市</text>
+      <picker mode="selector" range="{{cityNames}}" value="{{cityIndex}}" bindchange="onCityChange">
+        <view class="picker-value">
+          {{cityNames[cityIndex]}} <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 性别 -->
+    <view class="form-item">
+      <text class="label">性别</text>
+      <view class="radio-group">
+        <view class="radio-item {{gender === 'male' ? 'active' : ''}}" bindtap="setGender" data-val="male">男</view>
+        <view class="radio-item {{gender === 'female' ? 'active' : ''}}" bindtap="setGender" data-val="female">女</view>
+      </view>
+    </view>
+
+    <!-- 出生年份 -->
+    <view class="form-item">
+      <text class="label">出生年份</text>
+      <view class="slider-row">
+        <slider min="1960" max="2000" value="{{birthYear}}" bindchange="onBirthYearChange" activeColor="#1677FF" block-size="20" class="slider"/>
+        <text class="slider-val">{{birthYear}}年</text>
+      </view>
+    </view>
+
+    <!-- 开始缴费年份 -->
+    <view class="form-item">
+      <text class="label">开始缴费年份</text>
+      <view class="slider-row">
+        <slider min="1990" max="2024" value="{{startYear}}" bindchange="onStartYearChange" activeColor="#1677FF" block-size="20" class="slider"/>
+        <text class="slider-val">{{startYear}}年</text>
+      </view>
+    </view>
+
+    <!-- 月缴费基数 -->
+    <view class="form-item">
+      <text class="label">月缴费基数</text>
+      <view class="wage-row">
+        <view class="wage-preset {{wageMultiple === 0.6 ? 'active' : ''}}" bindtap="setWageMultiple" data-val="0.6">0.6倍</view>
+        <view class="wage-preset {{wageMultiple === 1 ? 'active' : ''}}" bindtap="setWageMultiple" data-val="1">1倍</view>
+        <view class="wage-preset {{wageMultiple === 1.5 ? 'active' : ''}}" bindtap="setWageMultiple" data-val="1.5">1.5倍</view>
+        <view class="wage-preset {{wageMultiple === 2 ? 'active' : ''}}" bindtap="setWageMultiple" data-val="2">2倍</view>
+        <view class="wage-preset {{wageMultiple === 3 ? 'active' : ''}}" bindtap="setWageMultiple" data-val="3">3倍</view>
+      </view>
+      <text class="wage-hint">≈ ¥{{monthlyBase}}/月（{{cityNames[cityIndex]}}社平工资×{{wageMultiple}}）</text>
+    </view>
+
+    <!-- 退休年龄 -->
+    <view class="form-item">
+      <text class="label">退休年龄</text>
+      <view class="radio-group">
+        <view class="radio-item {{retireAge === 50 ? 'active' : ''}}" bindtap="setRetireAge" data-val="50">50岁</view>
+        <view class="radio-item {{retireAge === 55 ? 'active' : ''}}" bindtap="setRetireAge" data-val="55">55岁</view>
+        <view class="radio-item {{retireAge === 60 ? 'active' : ''}}" bindtap="setRetireAge" data-val="60">60岁</view>
+        <view class="radio-item {{retireAge === 65 ? 'active' : ''}}" bindtap="setRetireAge" data-val="65">65岁</view>
+      </view>
+    </view>
+
+    <!-- 缴费年限显示 -->
+    <view class="info-row">
+      <text class="info-label">预计缴费年限</text>
+      <text class="info-val">{{payYears}} 年</text>
+    </view>
+  </view>
+
+  <button class="calc-btn" bindtap="calculate">立即测算</button>
+
+  <view class="disclaimer">
+    <text>本测算结果仅供参考，实际养老金以社保局核定为准</text>
+  </view>
+</view>

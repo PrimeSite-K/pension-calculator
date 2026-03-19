@@ -1,0 +1,14 @@
+{
+  "appid": "gh_a69c54a45082",
+  "projectname": "pension-calculator",
+  "description": "退休金测算小程序",
+  "miniprogramRoot": "miniprogram/",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram"
+}

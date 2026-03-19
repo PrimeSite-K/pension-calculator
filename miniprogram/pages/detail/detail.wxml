@@ -1,0 +1,61 @@
+<view class="container">
+  <view class="unlock-badge">🎉 已解锁详细报告</view>
+
+  <!-- 核心数据 -->
+  <view class="section-card">
+    <text class="section-title">📊 养老金详情</text>
+    <view class="detail-row">
+      <text class="detail-label">月养老金</text>
+      <text class="detail-val highlight">¥{{result.totalMonthly}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">年养老金</text>
+      <text class="detail-val">¥{{result.totalAnnual}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">基础养老金</text>
+      <text class="detail-val">¥{{result.basicPension}}/月</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">个人账户养老金</text>
+      <text class="detail-val">¥{{result.personalPension}}/月</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">个人账户累计</text>
+      <text class="detail-val">¥{{result.personalAccount}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-label">收入替代率</text>
+      <text class="detail-val">{{result.replaceRate}}%</text>
+    </view>
+  </view>
+
+  <!-- 多缴一年分析 -->
+  <view class="section-card">
+    <text class="section-title">📈 多缴一年能多多少？</text>
+    <view class="extra-row" wx:for="{{extraYears}}" wx:key="years">
+      <text class="extra-label">再多缴 {{item.years}} 年</text>
+      <view class="extra-right">
+        <text class="extra-amount">+¥{{item.diff}}/月</text>
+        <text class="extra-annual">年多 ¥{{item.annualDiff}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 断缴影响 -->
+  <view class="section-card">
+    <text class="section-title">⚠️ 断缴影响测算</text>
+    <view class="gap-row" wx:for="{{gapYears}}" wx:key="years">
+      <text class="gap-label">断缴 {{item.years}} 年</text>
+      <view class="gap-right">
+        <text class="gap-amount">-¥{{item.diff}}/月</text>
+        <text class="gap-pct">减少 {{item.pct}}%</text>
+      </view>
+    </view>
+    <text class="gap-tip">* 断缴期间个人账户停止积累，基础养老金缴费年限减少</text>
+  </view>
+
+  <!-- 分享按钮 -->
+  <button class="share-btn" open-type="share">分享给朋友</button>
+  <button class="recalc-btn" bindtap="recalc">重新测算</button>
+</view>
