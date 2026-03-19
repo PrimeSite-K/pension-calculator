@@ -13,6 +13,7 @@ Page({
     paidYearsList: PAID_YEARS_LIST,
     paidYearsIndex: 14,  // 默认15年
     retireAge: 60,
+    existingAccount: 0,
     monthlyWage: '',
     avgPayIndex: '',
     payYears: 0,
@@ -66,6 +67,11 @@ Page({
     this.setData({ avgPayIndex: e.detail.value })
   },
 
+  onExistingAccountInput(e) {
+    const val = parseFloat(e.detail.value)
+    this.setData({ existingAccount: isNaN(val) ? 0 : val })
+  },
+
   updateDerived() {
     const { cityIndex, birthYear, paidYearsIndex, retireAge } = this.data
     const city = CITIES[cityIndex]
@@ -77,7 +83,7 @@ Page({
   },
 
   calculate() {
-    const { cityIndex, retireAge, avgPayIndex, payYears, birthYear, paidYearsIndex } = this.data
+    const { cityIndex, retireAge, avgPayIndex, payYears, birthYear, paidYearsIndex, existingAccount } = this.data
     const city = CITIES[cityIndex]
     const index = parseFloat(avgPayIndex)
 
@@ -97,7 +103,8 @@ Page({
       payYears,
       avgPayIndex: index,
       retireAge,
-      monthlyBase
+      monthlyBase,
+      existingAccount: existingAccount || 0
     })
 
     const ages = [retireAge - 5, retireAge, retireAge + 5].filter(a => a >= 50 && a <= 70)
@@ -108,7 +115,7 @@ Page({
       const py = Math.max(paidYears + remainYears, 15)
       return {
         age,
-        ...calcPension({ avgWage: city.avgWage, payYears: py, avgPayIndex: index, retireAge: age, monthlyBase })
+        ...calcPension({ avgWage: city.avgWage, payYears: py, avgPayIndex: index, retireAge: age, monthlyBase, existingAccount: existingAccount || 0 })
       }
     })
 

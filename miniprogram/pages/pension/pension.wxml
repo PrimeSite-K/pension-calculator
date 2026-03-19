@@ -34,7 +34,13 @@
       <input class="num-input" type="number" value="{{retireAge}}" bindinput="onRetireAgeInput" placeholder="请输入，如 60" maxlength="2"/>
     </view>
 
-    <!-- 智能计算：输入月均工资 -->
+    <view class="form-item">
+      <text class="label">个人账户现有余额（元）</text>
+      <input class="num-input" type="number" value="{{existingAccount}}" bindinput="onExistingAccountInput" placeholder="没有可填 0"/>
+      <text class="field-hint">可在社保 App 或社保局查询个人账户余额</text>
+    </view>
+
+    <!-- 智能计算：输入缴纳基数 -->
     <block wx:if="{{mode === 'smart'}}">
       <view class="form-item">
         <text class="label">缴纳基数（元/月）</text>

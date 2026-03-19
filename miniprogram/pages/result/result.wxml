@@ -9,23 +9,23 @@
     </view>
   </view>
 
-  <!-- 构成拆分 -->
+  <!-- 三项拆分 -->
   <view class="section-card">
     <text class="section-title">养老金构成</text>
     <view class="breakdown-row">
-      <view class="breakdown-item">
-        <text class="breakdown-val">¥{{result.basicPension}}</text>
-        <text class="breakdown-label">基础养老金</text>
-      </view>
-      <text class="breakdown-plus">+</text>
-      <view class="breakdown-item">
-        <text class="breakdown-val">¥{{result.personalPension}}</text>
-        <text class="breakdown-label">个人账户养老金</text>
-      </view>
-      <text class="breakdown-plus">=</text>
       <view class="breakdown-item highlight">
         <text class="breakdown-val">¥{{result.totalMonthly}}</text>
-        <text class="breakdown-label">月养老金</text>
+        <text class="breakdown-label">养老金总额</text>
+      </view>
+      <text class="breakdown-eq">=</text>
+      <view class="breakdown-item">
+        <text class="breakdown-val blue">¥{{result.basicPension}}</text>
+        <text class="breakdown-label">基础养老金</text>
+      </view>
+      <text class="breakdown-eq">+</text>
+      <view class="breakdown-item">
+        <text class="breakdown-val green">¥{{result.personalPension}}</text>
+        <text class="breakdown-label">个人账户养老金</text>
       </view>
     </view>
     <view class="progress-bar">
@@ -33,8 +33,41 @@
       <view class="progress-personal" style="width:{{personalRatio}}%"></view>
     </view>
     <view class="progress-legend">
-      <view class="legend-item"><view class="dot blue"></view><text>基础养老金</text></view>
-      <view class="legend-item"><view class="dot green"></view><text>个人账户</text></view>
+      <view class="legend-item"><view class="dot blue"></view><text>基础养老金 {{basicRatio}}%</text></view>
+      <view class="legend-item"><view class="dot green"></view><text>个人账户 {{personalRatio}}%</text></view>
+    </view>
+  </view>
+
+  <!-- 计算过程 -->
+  <view class="section-card">
+    <text class="section-title">📋 计算过程</text>
+
+    <text class="calc-subtitle">一、基础养老金</text>
+    <text class="calc-formula">= 社平工资 × (1 + 平均缴费指数) ÷ 2 × 缴费年限 × 1%</text>
+    <text class="calc-formula">= {{result.avgWage}} × (1 + {{result.avgPayIndex}}) ÷ 2 × {{result.payYears}} × 1%</text>
+    <text class="calc-result">= ¥{{result.basicPension}} / 月</text>
+
+    <view class="calc-divider"></view>
+
+    <text class="calc-subtitle">二、个人账户养老金</text>
+    <text class="calc-formula">每月个人缴费 = 缴费基数 × 8%</text>
+    <text class="calc-formula">= {{result.monthlyBase}} × 8% = ¥{{result.monthlyPersonal}} / 月</text>
+    <text class="calc-formula">新增累计（按6%年利率复利）= ¥{{result.newAccumulated}}</text>
+    <text class="calc-formula" wx:if="{{result.existingAccount > 0}}">现有余额增值后 = ¥{{result.existingAccount}}（原始）</text>
+    <text class="calc-formula">个人账户总额 = ¥{{result.personalAccount}}</text>
+    <text class="calc-formula">计发月数（{{result.retireAge}}岁退休）= {{result.paymentMonths}} 个月</text>
+    <text class="calc-formula">= {{result.personalAccount}} ÷ {{result.paymentMonths}}</text>
+    <text class="calc-result">= ¥{{result.personalPension}} / 月</text>
+
+    <view class="calc-divider"></view>
+
+    <text class="calc-subtitle">三、月养老金合计</text>
+    <text class="calc-formula">= 基础养老金 + 个人账户养老金</text>
+    <text class="calc-formula">= {{result.basicPension}} + {{result.personalPension}}</text>
+    <text class="calc-result total">= ¥{{result.totalMonthly}} / 月</text>
+
+    <view class="calc-note">
+      <text>注：社平工资取{{cityName}}2024年数据，个人账户记账利率按6%估算，实际以社保局核定为准</text>
     </view>
   </view>
 
@@ -52,7 +85,7 @@
     </view>
   </view>
 
-  <!-- 解锁详情按钮 -->
+  <!-- 解锁详情 -->
   <view class="unlock-card" bindtap="watchAd">
     <view class="unlock-left">
       <text class="unlock-title">🎯 查看详细分析报告</text>
@@ -61,7 +94,6 @@
     <view class="unlock-btn">看广告解锁</view>
   </view>
 
-  <!-- 重新测算 -->
   <button class="recalc-btn" bindtap="recalc">重新测算</button>
 
   <view class="disclaimer">

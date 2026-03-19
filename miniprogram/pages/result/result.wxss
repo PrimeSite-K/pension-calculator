@@ -78,12 +78,10 @@
   color: #1677FF;
 }
 
-.breakdown-val {
-  display: block;
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #1a1a1a;
-}
+.breakdown-val { display: block; font-size: 32rpx; font-weight: 700; color: #1a1a1a; }
+.breakdown-val.blue { color: #1677FF; }
+.breakdown-val.green { color: #52C41A; }
+.breakdown-eq { font-size: 32rpx; color: #ccc; padding: 0 4rpx; }
 
 .breakdown-label {
   display: block;
@@ -92,10 +90,52 @@
   margin-top: 6rpx;
 }
 
-.breakdown-plus {
+.calc-subtitle {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 16rpx 0 10rpx;
+}
+
+.calc-formula {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.8;
+  font-family: monospace;
+}
+
+.calc-result {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1677FF;
+  margin-top: 6rpx;
+}
+
+.calc-result.total {
   font-size: 32rpx;
-  color: #ccc;
-  padding: 0 8rpx;
+  color: #FF6B00;
+}
+
+.calc-divider {
+  height: 1rpx;
+  background: #f0f0f0;
+  margin: 20rpx 0;
+}
+
+.calc-note {
+  margin-top: 16rpx;
+  background: #FFF7E6;
+  border-radius: 10rpx;
+  padding: 16rpx 20rpx;
+}
+
+.calc-note text {
+  font-size: 22rpx;
+  color: #888;
+  line-height: 1.6;
 }
 
 .progress-bar {
