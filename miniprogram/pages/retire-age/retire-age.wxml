@@ -19,22 +19,26 @@
       </picker>
     </view>
 
-    <!-- 工作类型 -->
-    <view class="form-item">
-      <text class="label">工作类型</text>
+    <!-- 工作类型：男性只有一类，女性分干部/工人 -->
+    <view class="form-item" wx:if="{{gender === 'female'}}">
+      <text class="label">人员类别</text>
       <view class="type-list">
-        <view class="type-item {{workType === 'normal' ? 'active' : ''}}" bindtap="setWorkType" data-val="normal">
-          <text class="type-title">普通职工</text>
-          <text class="type-desc">一般企业/机关事业单位职工</text>
+        <view class="type-item {{workType === 'cadre' ? 'active' : ''}}" bindtap="setWorkType" data-val="cadre">
+          <text class="type-title">干部（管理/技术岗）</text>
+          <text class="type-desc">法定退休年龄：55岁</text>
         </view>
-        <view class="type-item {{workType === 'special' ? 'active' : ''}}" bindtap="setWorkType" data-val="special">
-          <text class="type-title">特殊工种</text>
-          <text class="type-desc">井下、高温、高空等特殊工种，可提前5年退休</text>
+        <view class="type-item {{workType === 'worker' ? 'active' : ''}}" bindtap="setWorkType" data-val="worker">
+          <text class="type-title">工人（操作/生产岗）</text>
+          <text class="type-desc">法定退休年龄：50岁</text>
         </view>
-        <view class="type-item {{workType === 'flexible' ? 'active' : ''}}" bindtap="setWorkType" data-val="flexible">
-          <text class="type-title">灵活就业人员</text>
-          <text class="type-desc">个体工商户、自由职业者等</text>
-        </view>
+      </view>
+    </view>
+
+    <view class="form-item" wx:if="{{gender === 'male'}}">
+      <text class="label">人员类别</text>
+      <view class="type-item active">
+        <text class="type-title">普通职工</text>
+        <text class="type-desc">法定退休年龄：60岁</text>
       </view>
     </view>
   </view>
@@ -62,11 +66,9 @@
 
   <view class="policy-card">
     <text class="policy-title">📋 退休年龄政策说明</text>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">男性普通职工：60岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性普通职工（干部）：55岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性普通职工（工人）：50岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">特殊工种男性：55岁，女性：45岁</text></view>
-    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">灵活就业男性：60岁，女性：55岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">男性职工：60岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性干部（管理/技术岗）：55岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性工人（操作/生产岗）：50岁</text></view>
     <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">2025年起实施渐进式延迟退休政策</text></view>
   </view>
 
