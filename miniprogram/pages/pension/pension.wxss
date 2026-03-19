@@ -1,0 +1,157 @@
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+}
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 8rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.06);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 28rpx;
+  color: #888;
+  border-radius: 14rpx;
+}
+
+.tab.active {
+  background: #1677FF;
+  color: #fff;
+  font-weight: 600;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 8rpx 32rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.06);
+  margin-bottom: 24rpx;
+}
+
+.form-item {
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-item:last-child { border-bottom: none; }
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.picker-value {
+  font-size: 30rpx;
+  color: #1677FF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow { font-size: 36rpx; color: #ccc; }
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.slider { flex: 1; }
+
+.slider-val {
+  font-size: 30rpx;
+  color: #1677FF;
+  font-weight: 600;
+  min-width: 100rpx;
+  text-align: right;
+}
+
+.num-input {
+  width: 100%;
+  height: 72rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  color: #1a1a1a;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.field-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.hint-box {
+  margin-top: 16rpx;
+  background: #F0F7FF;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+}
+
+.hint-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1677FF;
+  margin-bottom: 10rpx;
+}
+
+.hint-text {
+  display: block;
+  font-size: 24rpx;
+  color: #555;
+  line-height: 1.8;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.info-val {
+  font-size: 32rpx;
+  color: #1677FF;
+  font-weight: 700;
+}
+
+.calc-btn {
+  width: 100%;
+  height: 96rpx;
+  background: #1677FF;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 600;
+  border-radius: 48rpx;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(22,119,255,0.3);
+  margin-bottom: 24rpx;
+}
+
+.disclaimer {
+  text-align: center;
+  padding-bottom: 40rpx;
+  font-size: 22rpx;
+  color: #bbb;
+}

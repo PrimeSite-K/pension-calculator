@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="header">
+    <text class="title">退休计算器</text>
+    <text class="subtitle">专业退休规划，一键测算</text>
+  </view>
+
+  <view class="card-list">
+    <view class="entry-card" bindtap="goRetireAge">
+      <view class="card-icon">🗓️</view>
+      <view class="card-content">
+        <text class="card-title">法定退休年龄计算</text>
+        <text class="card-desc">根据性别、出生日期、工作类型，计算您的法定退休年龄及距退休时间</text>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
+    <view class="entry-card" bindtap="goPension">
+      <view class="card-icon">💰</view>
+      <view class="card-content">
+        <text class="card-title">养老金估算</text>
+        <text class="card-desc">预估退休后每月可领取的养老金金额，支持智能计算和直接计算两种方式</text>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="disclaimer">
+    <text>本工具仅供参考，实际结果以社保局核定为准</text>
+  </view>
+</view>

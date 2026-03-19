@@ -1,0 +1,79 @@
+<view class="container">
+  <!-- 计算方式切换 -->
+  <view class="tab-bar">
+    <view class="tab {{mode === 'smart' ? 'active' : ''}}" bindtap="setMode" data-val="smart">智能计算</view>
+    <view class="tab {{mode === 'direct' ? 'active' : ''}}" bindtap="setMode" data-val="direct">直接计算</view>
+  </view>
+
+  <view class="form-card">
+    <!-- 公共字段 -->
+    <view class="form-item">
+      <text class="label">参保城市</text>
+      <picker mode="selector" range="{{cityNames}}" value="{{cityIndex}}" bindchange="onCityChange">
+        <view class="picker-value">{{cityNames[cityIndex]}} <text class="arrow">›</text></view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">出生年份</text>
+      <view class="slider-row">
+        <slider min="1960" max="2000" value="{{birthYear}}" bindchange="onBirthYearChange" activeColor="#1677FF" block-size="20" class="slider"/>
+        <text class="slider-val">{{birthYear}}年</text>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">开始缴费年份</text>
+      <view class="slider-row">
+        <slider min="1990" max="2025" value="{{startYear}}" bindchange="onStartYearChange" activeColor="#1677FF" block-size="20" class="slider"/>
+        <text class="slider-val">{{startYear}}年</text>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">退休年龄（岁）</text>
+      <input class="num-input" type="number" value="{{retireAge}}" bindinput="onRetireAgeInput" placeholder="请输入，如 60" maxlength="2"/>
+    </view>
+
+    <!-- 智能计算：输入月均工资 -->
+    <block wx:if="{{mode === 'smart'}}">
+      <view class="form-item">
+        <text class="label">月均税前工资（元）</text>
+        <input class="num-input" type="number" value="{{monthlyWage}}" bindinput="onMonthlyWageInput" placeholder="请输入您的月均工资"/>
+        <text class="field-hint">系统将自动计算您的缴费指数（工资÷当地社平工资）</text>
+      </view>
+      <view class="info-row" wx:if="{{avgPayIndex}}">
+        <text class="info-label">推算平均缴费指数</text>
+        <text class="info-val">{{avgPayIndex}}</text>
+      </view>
+    </block>
+
+    <!-- 直接计算：手动输入缴费指数 -->
+    <block wx:if="{{mode === 'direct'}}">
+      <view class="form-item">
+        <text class="label">本人平均缴费指数</text>
+        <input class="num-input" type="digit" value="{{avgPayIndex}}" bindinput="onPayIndexInput" placeholder="请输入，如 1.02" maxlength="5"/>
+        <view class="hint-box">
+          <text class="hint-title">📌 计算说明</text>
+          <text class="hint-text">平均缴费指数 = 历年实际缴费指数之和 ÷ 实际缴费年限</text>
+          <text class="hint-text">【示例】老李月均工资9000元，当地社平工资6000元，缴费15年，历年缴费指数分别为0.6、0.8、1.0、1.2、1.5（各3年）</text>
+          <text class="hint-text">总指数 = (0.6+0.8+1.0+1.2+1.5)×3 = 15.3</text>
+          <text class="hint-text">平均缴费指数 = 15.3 ÷ 15 = 1.02</text>
+          <text class="hint-text">老李的缴费指数 = 9000 ÷ 6000 = 1.5（若历年工资稳定）</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- 缴费年限显示 -->
+    <view class="info-row">
+      <text class="info-label">预计缴费年限</text>
+      <text class="info-val">{{payYears}} 年</text>
+    </view>
+  </view>
+
+  <button class="calc-btn" bindtap="calculate">立即测算</button>
+
+  <view class="disclaimer">
+    <text>本测算结果仅供参考，实际养老金以社保局核定为准</text>
+  </view>
+</view>

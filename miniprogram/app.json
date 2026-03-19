@@ -1,13 +1,15 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/home/home",
+    "pages/retire-age/retire-age",
+    "pages/pension/pension",
     "pages/result/result",
     "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1677FF",
-    "navigationBarTitleText": "退休金测算",
+    "navigationBarTitleText": "退休计算器",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#F5F7FA"
   },

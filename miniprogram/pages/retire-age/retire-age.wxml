@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="form-card">
+    <!-- 性别 -->
+    <view class="form-item">
+      <text class="label">性别</text>
+      <view class="radio-group">
+        <view class="radio-item {{gender === 'male' ? 'active' : ''}}" bindtap="setGender" data-val="male">男</view>
+        <view class="radio-item {{gender === 'female' ? 'active' : ''}}" bindtap="setGender" data-val="female">女</view>
+      </view>
+    </view>
+
+    <!-- 出生日期 -->
+    <view class="form-item">
+      <text class="label">出生日期</text>
+      <picker mode="date" value="{{birthDate}}" start="1950-01-01" end="2000-12-31" bindchange="onBirthDateChange">
+        <view class="picker-value">
+          {{birthDate}} <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 工作类型 -->
+    <view class="form-item">
+      <text class="label">工作类型</text>
+      <view class="type-list">
+        <view class="type-item {{workType === 'normal' ? 'active' : ''}}" bindtap="setWorkType" data-val="normal">
+          <text class="type-title">普通职工</text>
+          <text class="type-desc">一般企业/机关事业单位职工</text>
+        </view>
+        <view class="type-item {{workType === 'special' ? 'active' : ''}}" bindtap="setWorkType" data-val="special">
+          <text class="type-title">特殊工种</text>
+          <text class="type-desc">井下、高温、高空等特殊工种，可提前5年退休</text>
+        </view>
+        <view class="type-item {{workType === 'flexible' ? 'active' : ''}}" bindtap="setWorkType" data-val="flexible">
+          <text class="type-title">灵活就业人员</text>
+          <text class="type-desc">个体工商户、自由职业者等</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="calc-btn" bindtap="calculate">计算退休年龄</button>
+
+  <!-- 结果区域 -->
+  <view class="result-card" wx:if="{{result}}">
+    <view class="result-row">
+      <text class="result-label">法定退休年龄</text>
+      <text class="result-val">{{result.retireAge}} 岁</text>
+    </view>
+    <view class="result-row">
+      <text class="result-label">预计退休日期</text>
+      <text class="result-val">{{result.retireDate}}</text>
+    </view>
+    <view class="result-row">
+      <text class="result-label">距退休还有</text>
+      <text class="result-val highlight">{{result.remaining}}</text>
+    </view>
+    <view class="result-note">
+      <text>{{result.note}}</text>
+    </view>
+  </view>
+
+  <view class="policy-card">
+    <text class="policy-title">📋 退休年龄政策说明</text>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">男性普通职工：60岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性普通职工（干部）：55岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">女性普通职工（工人）：50岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">特殊工种男性：55岁，女性：45岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">灵活就业男性：60岁，女性：55岁</text></view>
+    <view class="policy-row"><text class="policy-dot">•</text><text class="policy-text">2025年起实施渐进式延迟退休政策</text></view>
+  </view>
+
+  <view class="disclaimer">
+    <text>本测算结果仅供参考，实际退休年龄以社保局核定为准</text>
+  </view>
+</view>

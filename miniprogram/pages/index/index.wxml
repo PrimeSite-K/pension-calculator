@@ -51,9 +51,10 @@
       <view class="hint-box">
         <text class="hint-title">📌 计算说明</text>
         <text class="hint-text">本人平均缴费指数 = 历年实际缴费指数之和 ÷ 实际缴费年限</text>
-        <text class="hint-text">示例：实际缴费15年，历年缴费指数分别为0.6、0.8、1.0、1.2、1.5（各3年）</text>
+        <text class="hint-text">【示例】老李月均工资9000元，当地社平工资6000元，缴费15年，历年缴费指数分别为0.6、0.8、1.0、1.2、1.5（各3年）</text>
         <text class="hint-text">总指数 = (0.6+0.8+1.0+1.2+1.5)×3 = 15.3</text>
         <text class="hint-text">平均缴费指数 = 15.3 ÷ 15 = 1.02</text>
+        <text class="hint-text">老李的缴费指数 = 9000 ÷ 6000 = 1.5（若历年工资稳定）</text>
       </view>
     </view>
 
