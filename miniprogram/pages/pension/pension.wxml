@@ -23,11 +23,10 @@
     </view>
 
     <view class="form-item">
-      <text class="label">开始缴费年份</text>
-      <view class="slider-row">
-        <slider min="1990" max="2025" value="{{startYear}}" bindchange="onStartYearChange" activeColor="#1677FF" block-size="20" class="slider"/>
-        <text class="slider-val">{{startYear}}年</text>
-      </view>
+      <text class="label">已缴费年数</text>
+      <picker mode="selector" range="{{paidYearsList}}" value="{{paidYearsIndex}}" bindchange="onPaidYearsChange">
+        <view class="picker-value">{{paidYearsList[paidYearsIndex]}} <text class="arrow">›</text></view>
+      </picker>
     </view>
 
     <view class="form-item">
@@ -38,9 +37,9 @@
     <!-- 智能计算：输入月均工资 -->
     <block wx:if="{{mode === 'smart'}}">
       <view class="form-item">
-        <text class="label">月均税前工资（元）</text>
-        <input class="num-input" type="number" value="{{monthlyWage}}" bindinput="onMonthlyWageInput" placeholder="请输入您的月均工资"/>
-        <text class="field-hint">系统将自动计算您的缴费指数（工资÷当地社平工资）</text>
+        <text class="label">缴纳基数（元/月）</text>
+        <input class="num-input" type="number" value="{{monthlyWage}}" bindinput="onMonthlyWageInput" placeholder="请输入月缴费基数"/>
+        <text class="field-hint">系统将自动计算您的缴费指数（缴纳基数÷当地社平工资）</text>
       </view>
       <view class="info-row" wx:if="{{avgPayIndex}}">
         <text class="info-label">推算平均缴费指数</text>
@@ -66,7 +65,7 @@
 
     <!-- 缴费年限显示 -->
     <view class="info-row">
-      <text class="info-label">预计缴费年限</text>
+      <text class="info-label">预计总缴费年限</text>
       <text class="info-val">{{payYears}} 年</text>
     </view>
   </view>

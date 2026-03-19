@@ -1,13 +1,17 @@
 const { CITIES } = require('../../data/cities')
 const { calcPension } = require('../../utils/calculator')
 
+// 生成1-45年的列表
+const PAID_YEARS_LIST = Array.from({ length: 45 }, (_, i) => `${i + 1}年`)
+
 Page({
   data: {
     mode: 'smart',
     cityNames: CITIES.map(c => c.name),
     cityIndex: 0,
     birthYear: 1985,
-    startYear: 2010,
+    paidYearsList: PAID_YEARS_LIST,
+    paidYearsIndex: 14,  // 默认15年
     retireAge: 60,
     monthlyWage: '',
     avgPayIndex: '',
@@ -33,8 +37,8 @@ Page({
     this.updateDerived()
   },
 
-  onStartYearChange(e) {
-    this.setData({ startYear: +e.detail.value })
+  onPaidYearsChange(e) {
+    this.setData({ paidYearsIndex: +e.detail.value })
     this.updateDerived()
   },
 
@@ -51,7 +55,6 @@ Page({
     const city = CITIES[this.data.cityIndex]
     if (!isNaN(val) && val > 0) {
       const index = Math.round((val / city.avgWage) * 100) / 100
-      // 缴费指数范围 0.6~3
       const clampedIndex = Math.min(Math.max(index, 0.6), 3)
       this.setData({ monthlyWage: e.detail.value, avgPayIndex: clampedIndex })
     } else {
@@ -64,15 +67,17 @@ Page({
   },
 
   updateDerived() {
-    const { cityIndex, birthYear, startYear, retireAge } = this.data
+    const { cityIndex, birthYear, paidYearsIndex, retireAge } = this.data
     const city = CITIES[cityIndex]
+    const paidYears = paidYearsIndex + 1  // 已缴年数
     const currentYear = new Date().getFullYear()
-    const payYears = Math.max(retireAge - (currentYear - birthYear) + (currentYear - startYear), 15)
+    const remainYears = Math.max(retireAge - (currentYear - birthYear), 0)
+    const payYears = Math.max(paidYears + remainYears, 15)
     this.setData({ payYears, monthlyBase: city.avgWage })
   },
 
   calculate() {
-    const { cityIndex, retireAge, avgPayIndex, payYears, birthYear, startYear } = this.data
+    const { cityIndex, retireAge, avgPayIndex, payYears, birthYear, paidYearsIndex } = this.data
     const city = CITIES[cityIndex]
     const index = parseFloat(avgPayIndex)
 
@@ -95,11 +100,12 @@ Page({
       monthlyBase
     })
 
-    // 对比：当前退休年龄 ±5年
     const ages = [retireAge - 5, retireAge, retireAge + 5].filter(a => a >= 50 && a <= 70)
+    const paidYears = paidYearsIndex + 1
+    const currentYear = new Date().getFullYear()
     const comparison = ages.map(age => {
-      const currentYear = new Date().getFullYear()
-      const py = Math.max(age - (currentYear - birthYear) + (currentYear - startYear), 15)
+      const remainYears = Math.max(age - (currentYear - birthYear), 0)
+      const py = Math.max(paidYears + remainYears, 15)
       return {
         age,
         ...calcPension({ avgWage: city.avgWage, payYears: py, avgPayIndex: index, retireAge: age, monthlyBase })
