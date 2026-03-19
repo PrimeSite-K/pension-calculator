@@ -75,6 +75,6 @@ Page({
         : `出生较早，不受延迟退休政策影响，退休年龄${baseAge}岁`
     }
 
-    this.setData({ result: { retireAge: retireAgeStr, retireDate, remaining, note } })
+    this.setData({ result: { baseAge, retireAge: retireAgeStr, retireDate, remaining, note } })
   }
 })

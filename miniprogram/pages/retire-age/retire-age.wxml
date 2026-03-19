@@ -48,7 +48,11 @@
   <!-- 结果区域 -->
   <view class="result-card" wx:if="{{result}}">
     <view class="result-row">
-      <text class="result-label">法定退休年龄</text>
+      <text class="result-label">原法定退休年龄</text>
+      <text class="result-val">{{result.baseAge}}岁</text>
+    </view>
+    <view class="result-row">
+      <text class="result-label">实际退休年龄</text>
       <text class="result-val">{{result.retireAge}}</text>
     </view>
     <view class="result-row">
