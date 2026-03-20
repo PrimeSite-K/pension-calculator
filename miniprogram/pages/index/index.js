@@ -11,7 +11,8 @@ Page({
     avgPayIndex: 1.00,
     retireAge: 60,
     monthlyBase: 0,
-    payYears: 0
+    payYears: 0,
+    existingAccount: 0
   },
 
   onLoad() {
@@ -62,8 +63,13 @@ Page({
     }
   },
 
+  onExistingAccountInput(e) {
+    const val = parseFloat(e.detail.value)
+    this.setData({ existingAccount: isNaN(val) ? 0 : val })
+  },
+
   calculate() {
-    const { cityIndex, birthYear, startYear, retireAge, avgPayIndex, monthlyBase, payYears } = this.data
+    const { cityIndex, birthYear, startYear, retireAge, avgPayIndex, monthlyBase, payYears, existingAccount } = this.data
     const city = CITIES[cityIndex]
 
     // 输入校验
@@ -81,7 +87,8 @@ Page({
       payYears,
       avgPayIndex,
       retireAge,
-      monthlyBase
+      monthlyBase,
+      existingAccount
     })
 
     // 多退休年龄对比（当前年龄±5年）
@@ -92,7 +99,7 @@ Page({
       const py = Math.max(age - (currentYear - birthYear) + (currentYear - startYear), 15)
       return {
         age,
-        ...calcPension({ avgWage: city.avgWage, payYears: py, avgPayIndex, retireAge: age, monthlyBase })
+        ...calcPension({ avgWage: city.avgWage, payYears: py, avgPayIndex, retireAge: age, monthlyBase, existingAccount })
       }
     })
 
