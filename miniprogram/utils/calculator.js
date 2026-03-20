@@ -19,16 +19,11 @@ function calcPension(params) {
 
   // 2. 个人账户累计储存额
   // 每月个人缴费 = 缴费基数 × 8%
-  // 按复利计算，年利率6%（国家记账利率近似值）
+  // 0利率，纯线性累计（不计复利）
   const monthlyPersonal = monthlyBase * 0.08
-  const annualRate = 0.06
-  let newAccumulated = 0
-  for (let y = 0; y < payYears; y++) {
-    newAccumulated = (newAccumulated + monthlyPersonal * 12) * (1 + annualRate)
-  }
-  // 个人账户总额 = 现有余额（按同等利率增值）+ 新增累计
-  const existingGrown = existingAccount * Math.pow(1 + annualRate, payYears)
-  const personalAccount = existingGrown + newAccumulated
+  const newAccumulated = monthlyPersonal * 12 * payYears
+  // 个人账户总额 = 现有余额（不计利息）+ 新增累计
+  const personalAccount = existingAccount + newAccumulated
 
   // 3. 个人账户养老金
   const paymentMonths = PAYMENT_MONTHS[retireAge] || 139
